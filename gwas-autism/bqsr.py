@@ -33,7 +33,7 @@ def createAndUploadMD5(fileName):
 
 ##############################################################################################################################
 # 1. Analyze patterns of covariation in the sequence dataset
-baseRecallCommand = "(time java -jar /tools/GATK/GenomeAnalysisTK.jar  " \
+baseRecallCommand = "(time java -Xmx4g -jar /tools/GATK/GenomeAnalysisTK.jar -l INFO  " \
                                 + "-T BaseRecalibrator "\
                                 + " -R "+reference_genome_path \
                                 + " -I "+ inputBam \
@@ -61,7 +61,7 @@ os.system("time aws s3 sync . s3://rnaseq-bucket/Makrogen/KATU/" + prefix + " --
 ##############################################################################################################################
 
 # 2. Do a second pass to analyze covariation remaining after recalibration
-baseRecallPostAnalyzeCommand = "(time java -jar /tools/GATK/GenomeAnalysisTK.jar  " \
+baseRecallPostAnalyzeCommand = "(time java -Xmx4g -jar /tools/GATK/GenomeAnalysisTK.jar -l INFO  " \
                                 + "-T BaseRecalibrator "\
                                 + " -R "+reference_genome_path \
                                 + " -I "+ inputBam \
@@ -90,10 +90,11 @@ os.system("time aws s3 sync . s3://rnaseq-bucket/Makrogen/KATU/" + prefix + " --
 ##############################################################################################################################
 
 # 3. Generate before/after plots
-bqsrQCCommand = "(time java -jar /tools/GATK/GenomeAnalysisTK.jar  " \
+bqsrQCCommand = "(time java -Xmx4g -jar /tools/GATK/GenomeAnalysisTK.jar -l INFO " \
                                 + "-T AnalyzeCovariates "\
                                 + " -before "+prefix+"_recal_data.table " \
                                 + " -after "+prefix+"_post_recal_data.table  " \
+                                + " -nct 8"\
                                 + " -plots " +prefix+"_recalibration_plots.pdf  " \
                                 + ")   1>  "+prefix+"_bqsrQC.log  2> " \
                                 + prefix + "_bqsrQC.log"
@@ -114,7 +115,7 @@ os.system("time aws s3 sync . s3://rnaseq-bucket/Makrogen/KATU/" + prefix + " --
 ##############################################################################################################################
 
 # 4. Apply the recalibration to your sequence data
-printReadsCommand = "(time java -jar /tools/GATK/GenomeAnalysisTK.jar  --emit_original_quals " \
+printReadsCommand = "(time java -Xmx4g -jar /tools/GATK/GenomeAnalysisTK.jar -l INFO  --emit_original_quals " \
                                 + " -T PrintReads "\
                                 + " -R "+reference_genome_path \
                                 + " -I "+ inputBam \
