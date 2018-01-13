@@ -114,7 +114,7 @@ os.system("time aws s3 sync . s3://rnaseq-bucket/Makrogen/KATU/" + prefix + " --
 ##############################################################################################################################
 
 # 4. Apply the recalibration to your sequence data
-printReadsCommand = "(time java -jar /tools/GATK/GenomeAnalysisTK.jar  –emit_original_quals " \
+printReadsCommand = "(time java -jar /tools/GATK/GenomeAnalysisTK.jar  --emit_original_quals " \
                                 + " -T PrintReads "\
                                 + " -R "+reference_genome_path \
                                 + " -I "+ inputBam \
