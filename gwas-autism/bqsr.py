@@ -10,15 +10,15 @@ https://gatkforums.broadinstitute.org/gatk/discussion/2801/howto-recalibrate-bas
 '''
 
 if len(sys.argv) != 7:
-    print ("Usage: python "+sys.argv[0]+" input_bam reference_genome_path known_indels_dbsnp known_indels_mills known_indels_1000G output_prefix")
+    print ("Usage: python "+sys.argv[0]+" input_bam reference_genome_path knownSites_indels_dbsnp knownSites_indels_mills knownSites_indels_1000G output_prefix")
     print(sys.argv)
     quit()
 
 inputBam = sys.argv[1]
 reference_genome_path = sys.argv[2]
-known_indels_dbsnp = sys.argv[3]
-known_indels_mills = sys.argv[4]
-known_indels_1000G = sys.argv[5]
+knownSites_indels_dbsnp = sys.argv[3]
+knownSites_indels_mills = sys.argv[4]
+knownSites_indels_1000G = sys.argv[5]
 prefix = sys.argv[6]
 shutdown = False
 
@@ -37,9 +37,9 @@ baseRecallCommand = "(time java -jar /tools/GATK/GenomeAnalysisTK.jar  " \
                                 + "-T BaseRecalibrator "\
                                 + " -R "+reference_genome_path \
                                 + " -I "+ inputBam \
-                                + " -known " + known_indels_dbsnp \
-                                + " -known " + known_indels_mills \
-                                + " -known " + known_indels_1000G \
+                                + " -knownSites " + knownSites_indels_dbsnp \
+                                + " -knownSites " + knownSites_indels_mills \
+                                + " -knownSites " + knownSites_indels_1000G \
                                 + " -nct 8"\
                                 + " -o "+prefix+"_recal_data.table  "\
                                 + ")   1>  "+prefix+"_baseRecall.log  2> " \
@@ -65,9 +65,9 @@ baseRecallPostAnalyzeCommand = "(time java -jar /tools/GATK/GenomeAnalysisTK.jar
                                 + "-T BaseRecalibrator "\
                                 + " -R "+reference_genome_path \
                                 + " -I "+ inputBam \
-                                + " -known " + known_indels_dbsnp \
-                                + " -known " + known_indels_mills \
-                                + " -known " + known_indels_1000G \
+                                + " -knownSites " + knownSites_indels_dbsnp \
+                                + " -knownSites " + knownSites_indels_mills \
+                                + " -knownSites " + knownSites_indels_1000G \
                                 + " -BQSR " +prefix+"_recal_data.table "\
                                 + " -nct 8"\
                                 + " -o "+prefix+"_post_recal_data.table  "\
