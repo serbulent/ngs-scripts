@@ -30,7 +30,7 @@ def createAndUploadMD5(fileName):
     os.system(md5Command)
     print("MD5 upload started...")
     os.system("time aws s3 sync . s3://rnaseq-bucket/Makrogen/KATU/" + prefix + " --exclude '*' --include '*.md5'")
-
+'''
 ##############################################################################################################################
 # 1. Analyze patterns of covariation in the sequence dataset
 baseRecallCommand = "(time java -Xmx4g -jar /tools/GATK/GenomeAnalysisTK.jar -l INFO  " \
@@ -88,7 +88,7 @@ print("Base Recall upload started...")
 os.system("time aws s3 sync . s3://rnaseq-bucket/Makrogen/KATU/" + prefix + " --exclude '*' --include '*.table'")
 
 ##############################################################################################################################
-
+'''
 # 3. Generate before/after plots
 bqsrQCCommand = "(time java -Xmx4g -jar /tools/GATK/GenomeAnalysisTK.jar -l INFO " \
                                 + "-T AnalyzeCovariates "\
