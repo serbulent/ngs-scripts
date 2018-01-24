@@ -36,10 +36,10 @@ def createAndUploadMD5(fileName):
 
 mpileupCommand = "(time sambamba mpileup  -t "+numberOfCPU \
                                 + " -o " + prefix+".mpileup.trio.bcf  "\
-                                +"--samtools -B -q 1 -u -g -f  " + reference_genome_path \
                                 + " " + father_bam \
                                 + " " + mother_bam \
                                 + " " + child_bam \
+                                + "--samtools -B -q 1 -u -g -f  " + reference_genome_path \
                                 + " -t AD,INFO/AD,ADF,INFO/ADF,ADR,INFO/ADR,DP "\
                                 + " )   1>  "+prefix+"_mpileup.log  2> " \
                                 + prefix+"_mpileup.log"
