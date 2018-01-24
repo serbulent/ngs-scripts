@@ -8,18 +8,17 @@ For referance please see;
 '''
 
 numberOfCPU = multiprocessing.cpu_count()
-
+print len(sys.argv)
 if len(sys.argv) != 6:
     print ("Usage: python "+sys.argv[0]+" reference_genome_path father_bam mother_bam child_bam output_prefix")
     print(sys.argv)
     quit()
 
-inputBam = sys.argv[1]
-reference_genome_path = sys.argv[2]
-knownSites_indels_dbsnp = sys.argv[3]
-knownSites_indels_mills = sys.argv[4]
-knownSites_indels_1000G = sys.argv[5]
-prefix = sys.argv[6]
+reference_genome_path = sys.argv[1]
+father_bam = sys.argv[2]
+mother_bam = sys.argv[3]
+child_bam = sys.argv[4]
+prefix = sys.argv[5]
 shutdown = False
 
 def createAndUploadMD5(fileName):
