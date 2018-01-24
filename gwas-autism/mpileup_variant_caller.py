@@ -7,12 +7,14 @@ For referance please see;
 
 '''
 
-numberOfCPU = multiprocessing.cpu_count()
-print len(sys.argv)
+numberOfCPU = str(multiprocessing.cpu_count())
+
 if len(sys.argv) != 6:
     print ("Usage: python "+sys.argv[0]+" reference_genome_path father_bam mother_bam child_bam output_prefix")
     print(sys.argv)
     quit()
+
+print(sys.argv)
 
 reference_genome_path = sys.argv[1]
 father_bam = sys.argv[2]
@@ -31,6 +33,7 @@ def createAndUploadMD5(fileName):
     os.system("time aws s3 sync . s3://rnaseq-bucket/Makrogen/KATU/" + prefix + " --exclude '*' --include '*.md5'")
 
 ##############################################################################################################################
+
 mpileupCommand = "(time sambamba mpileup  -t "+numberOfCPU \
                                 + " -o " + prefix+".mpileup.trio.bcf  "\
                                 +"--samtools -B -q 1 -u -g -f  " + reference_genome_path \
