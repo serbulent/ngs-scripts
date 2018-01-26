@@ -29,7 +29,7 @@ def createAndUploadMD5(fileName):
 
 ##############################################################################################################################
 
-haplotypeCallerCommand = "(time java -jar -Xmx4g /tools/GATK/GenomeAnalysisTK.jar -T HaplotypeCaller -stand_call_conf 20 -stand_emit_conf 10 " \
+haplotypeCallerCommand = "(time java -jar -Xmx4g /tools/GATK/GenomeAnalysisTK.jar -T HaplotypeCaller -stand_call_conf 20 " \
                                 + " -A BaseQualityRankSumTest -A Coverage -A DepthPerAlleleBySample -A FisherStrand -A QualByDepth -A ReadPosRankSumTest " \
                                 + " -nct " + numberOfCPU \
                                 + " -R " + reference_genome_path \
