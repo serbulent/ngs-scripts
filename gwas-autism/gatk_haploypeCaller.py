@@ -9,6 +9,8 @@ if len(sys.argv) != 6:
 
 print(sys.argv)
 
+numberOfCPU = str(multiprocessing.cpu_count())
+
 reference_genome_path = sys.argv[1]
 father_bam = sys.argv[2]
 mother_bam = sys.argv[3]
@@ -27,7 +29,9 @@ def createAndUploadMD5(fileName):
 
 ##############################################################################################################################
 
-haplotypeCallerCommand = "(time java -jar GenomeAnalysisTK.jar -T HaplotypeCaller " \
+haplotypeCallerCommand = "(time java -jar -Xmx4g /tools/GATK/GenomeAnalysisTK.jar -T HaplotypeCaller -stand_call_conf 20 -stand_emit_conf 10 " \
+                                + " -A BaseQualityRankSumTest -A Coverage -A DepthPerAlleleBySample -A FisherStrand -A QualByDepth -A ReadPosRankSumTest " \
+                                + " -nct " + numberOfCPU \
                                 + " -R " + reference_genome_path \
                                 + " -I " + father_bam \
                                 + " -I " + mother_bam \
